@@ -20,7 +20,7 @@ resource "aws_iam_role" "github_actions" {
           }
 
           StringLike = {
-            "token.actions.githubusercontent.com:sub" = "repo:Arpit20261202/terraform-aws-devops-project:ref:refs/heads/main"
+            "token.actions.githubusercontent.com:sub" = "repo:Arpit20261202/terraform-aws-devops-project:*"
           }
         }
       }
