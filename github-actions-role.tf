@@ -17,10 +17,7 @@ resource "aws_iam_role" "github_actions" {
         Condition = {
           StringEquals = {
             "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
-          }
-
-          StringLike = {
-            "token.actions.githubusercontent.com:sub" = "repo:Arpit20261202/terraform-aws-devops-project:*"
+            "token.actions.githubusercontent.com:sub" = "repo:Arpit20261202@319696986/terraform-aws-devops-project@1379560845:ref:refs/heads/main"
           }
         }
       }
