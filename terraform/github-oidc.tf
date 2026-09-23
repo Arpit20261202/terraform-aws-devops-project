@@ -86,6 +86,7 @@ resource "aws_iam_role_policy" "github_actions" {
           "ec2:DeleteVpc",
           "ec2:ModifyVpcAttribute",
           "ec2:DescribeVpcs",
+          "ec2:DescribeVpcAttribute",
 
           "ec2:CreateSubnet",
           "ec2:DeleteSubnet",
