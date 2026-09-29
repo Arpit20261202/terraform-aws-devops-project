@@ -1,12 +1,8 @@
 data "aws_caller_identity" "current" {}
 
-# GitHub OIDC Provider
-resource "aws_iam_openid_connect_provider" "github" {
+# Existing GitHub OIDC Provider
+data "aws_iam_openid_connect_provider" "github" {
   url = "https://token.actions.githubusercontent.com"
-
-  client_id_list = [
-    "sts.amazonaws.com"
-  ]
 }
 
 # GitHub Actions IAM Role
@@ -21,7 +17,7 @@ resource "aws_iam_role" "github_actions" {
         Effect = "Allow"
 
         Principal = {
-          Federated = aws_iam_openid_connect_provider.github.arn
+          Federated = data.aws_iam_openid_connect_provider.github.arn
         }
 
         Action = "sts:AssumeRoleWithWebIdentity"
@@ -71,7 +67,9 @@ resource "aws_iam_role_policy" "github_actions" {
           "ecr:CompleteLayerUpload",
           "ecr:InitiateLayerUpload",
           "ecr:PutImage",
-          "ecr:UploadLayerPart"
+          "ecr:UploadLayerPart",
+          "ecr:TagResource",
+          "ecr:UntagResource"
         ]
 
         Resource = "arn:aws:ecr:ap-south-1:599657398123:repository/terraform-aws-devops-app"
@@ -164,7 +162,9 @@ resource "aws_iam_role_policy" "github_actions" {
           "iam:DeleteRolePolicy",
           "iam:GetRolePolicy",
           "iam:ListRolePolicies",
-          "iam:ListAttachedRolePolicies"
+          "iam:ListAttachedRolePolicies",
+          "iam:TagRole",
+          "iam:UntagRole"
         ]
 
         Resource = [
@@ -172,15 +172,12 @@ resource "aws_iam_role_policy" "github_actions" {
         ]
       },
 
-      # GitHub OIDC Provider
+      # Existing GitHub OIDC Provider
       {
         Effect = "Allow"
 
         Action = [
-          "iam:GetOpenIDConnectProvider",
-          "iam:CreateOpenIDConnectProvider",
-          "iam:DeleteOpenIDConnectProvider",
-          "iam:UpdateOpenIDConnectProviderThumbprint"
+          "iam:GetOpenIDConnectProvider"
         ]
 
         Resource = "arn:aws:iam::599657398123:oidc-provider/token.actions.githubusercontent.com"
@@ -188,5 +185,3 @@ resource "aws_iam_role_policy" "github_actions" {
     ]
   })
 }
-
-
