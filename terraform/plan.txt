@@ -1,0 +1,160 @@
+[0m[1mdata.aws_caller_identity.current: Reading...[0m[0m
+[0m[1mdata.aws_iam_openid_connect_provider.github: Reading...[0m[0m
+[0m[1maws_ecr_repository.app: Refreshing state... [id=terraform-aws-devops-app][0m
+[0m[1maws_iam_role.eks_node: Refreshing state... [id=terraform-aws-devops-eks-node-role][0m
+[0m[1maws_iam_role.eks_cluster: Refreshing state... [id=terraform-aws-devops-eks-cluster-role][0m
+[0m[1maws_vpc.main: Refreshing state... [id=vpc-02f4b97408d673925][0m
+[0m[1maws_iam_openid_connect_provider.github: Refreshing state... [id=arn:aws:iam::599657398123:oidc-provider/token.actions.githubusercontent.com][0m
+[0m[1mdata.aws_caller_identity.current: Read complete after 0s [id=599657398123][0m
+[0m[1maws_internet_gateway.main: Refreshing state... [id=igw-076a65fb34c77c41b][0m
+[0m[1maws_subnet.public_1: Refreshing state... [id=subnet-0af54d20f324b1f0d][0m
+[0m[1maws_subnet.public_2: Refreshing state... [id=subnet-0e12314cb8102e5bf][0m
+[0m[1maws_route_table.public: Refreshing state... [id=rtb-056eb2bdb0332efc3][0m
+[0m[1mdata.aws_iam_openid_connect_provider.github: Read complete after 1s [id=arn:aws:iam::599657398123:oidc-provider/token.actions.githubusercontent.com][0m
+[0m[1maws_iam_role.github_actions: Refreshing state... [id=terraform-aws-devops-github-actions-role][0m
+[0m[1maws_route_table_association.public_2: Refreshing state... [id=rtbassoc-08593485310285399][0m
+[0m[1maws_route_table_association.public_1: Refreshing state... [id=rtbassoc-0514e6623aa5650dd][0m
+[0m[1maws_iam_role_policy_attachment.eks_worker_node: Refreshing state... [id=terraform-aws-devops-eks-node-role/arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy][0m
+[0m[1maws_iam_role_policy_attachment.eks_cni: Refreshing state... [id=terraform-aws-devops-eks-node-role/arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy][0m
+[0m[1maws_iam_role_policy_attachment.eks_ecr: Refreshing state... [id=terraform-aws-devops-eks-node-role/arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPullOnly][0m
+[0m[1maws_iam_role_policy_attachment.eks_cluster_policy: Refreshing state... [id=terraform-aws-devops-eks-cluster-role/arn:aws:iam::aws:policy/AmazonEKSClusterPolicy][0m
+[0m[1maws_eks_cluster.main: Refreshing state... [id=terraform-aws-devops-eks][0m
+[0m[1maws_eks_node_group.main: Refreshing state... [id=terraform-aws-devops-eks:terraform-aws-devops-nodes][0m
+[0m[1maws_iam_role_policy.github_actions: Refreshing state... [id=terraform-aws-devops-github-actions-role:terraform-aws-devops-github-actions-policy][0m
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  [33m~[0m update in-place[0m
+  [31m-[0m destroy[0m
+
+Terraform will perform the following actions:
+
+[1m  # aws_iam_openid_connect_provider.github[0m will be [1m[31mdestroyed[0m
+  # (because aws_iam_openid_connect_provider.github is not in configuration)
+[0m  [31m-[0m[0m resource "aws_iam_openid_connect_provider" "github" {
+      [31m-[0m[0m arn             = "arn:aws:iam::599657398123:oidc-provider/token.actions.githubusercontent.com" [90m-> null[0m[0m
+      [31m-[0m[0m client_id_list  = [
+          [31m-[0m[0m "sts.amazonaws.com",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m id              = "arn:aws:iam::599657398123:oidc-provider/token.actions.githubusercontent.com" [90m-> null[0m[0m
+      [31m-[0m[0m tags_all        = {
+          [31m-[0m[0m "Environment" = "dev"
+          [31m-[0m[0m "ManagedBy"   = "Terraform"
+          [31m-[0m[0m "Project"     = "terraform-aws-devops"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m thumbprint_list = [
+          [31m-[0m[0m "ab9d0263244dd0326eb67015705a667e79cfe998",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m url             = "token.actions.githubusercontent.com" [90m-> null[0m[0m
+    }
+
+[1m  # aws_iam_role_policy.github_actions[0m will be updated in-place
+[0m  [33m~[0m[0m resource "aws_iam_role_policy" "github_actions" {
+        id          = "terraform-aws-devops-github-actions-role:terraform-aws-devops-github-actions-policy"
+        name        = "terraform-aws-devops-github-actions-policy"
+      [33m~[0m[0m policy      = jsonencode(
+          [33m~[0m[0m {
+              [33m~[0m[0m Statement = [
+                    {
+                        Action   = [
+                            "ecr:GetAuthorizationToken",
+                        ]
+                        Effect   = "Allow"
+                        Resource = "*"
+                    },
+                  [33m~[0m[0m {
+                      [33m~[0m[0m Action   = [
+                            [90m# (7 unchanged elements hidden)[0m[0m
+                            "ecr:UploadLayerPart",
+                          [32m+[0m[0m "ecr:TagResource",
+                          [32m+[0m[0m "ecr:UntagResource",
+                        ]
+                        [90m# (2 unchanged attributes hidden)[0m[0m
+                    },
+                    {
+                        Action   = [
+                            "ec2:CreateVpc",
+                            "ec2:DeleteVpc",
+                            "ec2:ModifyVpcAttribute",
+                            "ec2:DescribeVpcs",
+                            "ec2:DescribeVpcAttribute",
+                            "ec2:CreateSubnet",
+                            "ec2:DeleteSubnet",
+                            "ec2:ModifySubnetAttribute",
+                            "ec2:DescribeSubnets",
+                            "ec2:CreateInternetGateway",
+                            "ec2:DeleteInternetGateway",
+                            "ec2:AttachInternetGateway",
+                            "ec2:DetachInternetGateway",
+                            "ec2:DescribeInternetGateways",
+                            "ec2:CreateRouteTable",
+                            "ec2:DeleteRouteTable",
+                            "ec2:CreateRoute",
+                            "ec2:DeleteRoute",
+                            "ec2:AssociateRouteTable",
+                            "ec2:DisassociateRouteTable",
+                            "ec2:DescribeRouteTables",
+                            "ec2:CreateTags",
+                            "ec2:DeleteTags",
+                            "ec2:DescribeTags",
+                            "ec2:DescribeAvailabilityZones",
+                            "ec2:DescribeSecurityGroups",
+                            "ec2:DescribeImages",
+                            "ec2:DescribeInstances",
+                            "ec2:DescribeVolumes",
+                            "ec2:DescribeNetworkInterfaces",
+                        ]
+                        Effect   = "Allow"
+                        Resource = "*"
+                    },
+                    {
+                        Action   = [
+                            "eks:CreateCluster",
+                            "eks:DescribeCluster",
+                            "eks:UpdateClusterConfig",
+                            "eks:UpdateClusterVersion",
+                            "eks:DeleteCluster",
+                            "eks:CreateNodegroup",
+                            "eks:DescribeNodegroup",
+                            "eks:UpdateNodegroupConfig",
+                            "eks:UpdateNodegroupVersion",
+                            "eks:DeleteNodegroup",
+                            "eks:ListClusters",
+                            "eks:ListNodegroups",
+                            "eks:TagResource",
+                            "eks:UntagResource",
+                        ]
+                        Effect   = "Allow"
+                        Resource = "*"
+                    },
+                  [33m~[0m[0m {
+                      [33m~[0m[0m Action   = [
+                            [90m# (11 unchanged elements hidden)[0m[0m
+                            "iam:ListAttachedRolePolicies",
+                          [32m+[0m[0m "iam:TagRole",
+                          [32m+[0m[0m "iam:UntagRole",
+                        ]
+                        [90m# (2 unchanged attributes hidden)[0m[0m
+                    },
+                  [33m~[0m[0m {
+                      [33m~[0m[0m Action   = [
+                            "iam:GetOpenIDConnectProvider",
+                          [31m-[0m[0m "iam:CreateOpenIDConnectProvider",
+                          [31m-[0m[0m "iam:DeleteOpenIDConnectProvider",
+                          [31m-[0m[0m "iam:UpdateOpenIDConnectProviderThumbprint",
+                        ]
+                        [90m# (2 unchanged attributes hidden)[0m[0m
+                    },
+                ]
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            }
+        )
+        [90m# (2 unchanged attributes hidden)[0m[0m
+    }
+
+[1mPlan:[0m 0 to add, 1 to change, 1 to destroy.
+[0m[90m
+─────────────────────────────────────────────────────────────────────────────[0m
+
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.
