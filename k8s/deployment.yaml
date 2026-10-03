@@ -21,7 +21,7 @@ spec:
       containers:
         - name: devops-demo
 
-          image: 599657398123.dkr.ecr.ap-south-1.amazonaws.com/terraform-aws-devops-app:af68888bc4461be49e518d6a3b58c26df38b90a9
+          image: 599657398123.dkr.ecr.ap-south-1.amazonaws.com/terraform-aws-devops-app:2b2c232a0ecc0fd6f64afd6629ce2bf3e398d495
 
           ports:
             - containerPort: 8080
